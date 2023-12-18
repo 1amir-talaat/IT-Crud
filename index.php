@@ -1,16 +1,19 @@
 <?php
 
-class User {
+abstract class Person {
   public $name;
-  private $password;
-  private $email;
-  public const x = 15;
+  public $password;
+  public $email;
 
   public function __construct($name, $password, $email) {
     $this->name = $name;
     $this->password = $password;
     $this->email = $email;
   }
+}
+
+class User extends Person {
+  public const x = 15;
 
   public function get_name() {
     return $this->name;
@@ -43,12 +46,9 @@ class User {
 
 $user1 = new User("amir", "26121982", "amir@gmail.com");
 
-// encapsulation
-echo ("-------- encapsulation --------" . "<br>");
 echo $user1->get_name() . "<br>";
 echo $user1->get_email() . "<br>";
 echo $user1->get_password() . "<br>";
 $user1->set_password("28102006");
 echo $user1->get_password() . "<br>";
 echo $user1->get_self() . "<br>";
-
