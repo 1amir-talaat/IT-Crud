@@ -1,54 +1,63 @@
 <?php
 
-abstract class Person {
-  public $name;
-  public $password;
-  public $email;
+require_once("./CRUD.php");
 
-  public function __construct($name, $password, $email) {
-    $this->name = $name;
-    $this->password = $password;
-    $this->email = $email;
-  }
-}
+$crud = new CRUD();
+$all_products = $crud->get_all_products();
 
-class User extends Person {
-  public const x = 15;
+?>
 
-  public function get_name() {
-    return $this->name;
-  }
+<!DOCTYPE html>
+<html lang="en">
 
-  public function get_password() {
-    return $this->password;
-  }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+  <title>CRUD</title>
+</head>
 
-  public function get_email() {
-    return $this->email;
-  }
+<body>
+  <div class="container">
+    <header class="text-center p-5 display-1 mb-5 bg-link-light">
+      CRUD App
+    </header>
+    <table class="table table-striped">
+      <thead>
+        <th>#</th>
+        <th>Name</th>
+        <th style="width: 55%">Description</th>
+        <th>Price</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <?php
+        for ($i = 0; $i < count($all_products); $i++) {
+          echo "<tr>";
+          for ($j = 0; $j < count($all_products[$i]); $j++) {
+            echo "<td>";
+            echo $all_products[$i][$j];
+            echo "</td>";
+          }
+          echo "<td class='align-middle m-auto'>
+                  <div class='d-flex align-items-center gap-3'>
+                    <a href='./update.php?id={$all_products[$i][0]}' class='btn btn-primary'>
+                      edit
+                    </a>
+                    <a href='./delete.php?id={$all_products[$i][0]}' class='btn btn-danger'>
+                      delete
+                    </a>
+                  </div>
+                </td></tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+    <a href="./add.php" class="btn btn-success">add prodect</a>
+  </div>
 
-  public function set_name($name) {
-    $this->email = $name;
-  }
 
-  public function set_password($password) {
-    $this->password = $password;
-  }
+  <script src="./bootstrap/js/bootstrap.bundle.js"> </script>
+</body>
 
-  public function set_email($email) {
-    $this->email = $email;
-  }
-
-  public function get_self() {
-    return self::x;
-  }
-}
-
-$user1 = new User("amir", "26121982", "amir@gmail.com");
-
-echo $user1->get_name() . "<br>";
-echo $user1->get_email() . "<br>";
-echo $user1->get_password() . "<br>";
-$user1->set_password("28102006");
-echo $user1->get_password() . "<br>";
-echo $user1->get_self() . "<br>";
+</html>
